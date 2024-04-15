@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SplashSection from './SplashSection';
 import AboutSection from './AboutSection';
 import ProofOfConcept from './ProofOfConcept';
-import './App.css'; // Import global CSS file for additional styling
 
 const App = () => {
+    const [playerInfo, setPlayerInfo] = useState(null);
+
+    const fetchPlayerInfo = async () => {
+        try {
+            const response = await fetch('/api/players/1'); // Fetch player info for player with ID 1 (can be dynamic)
+            const data = await response.json();
+            setPlayerInfo(data);
+        } catch (error) {
+            console.error('Error fetching player info:', error);
+        }
+    };
+
     return (
-        <div className="app">
+        <div>
             <SplashSection />
             <AboutSection />
-            <ProofOfConcept />
+            <ProofOfConcept fetchPlayerInfo={fetchPlayerInfo} playerInfo={playerInfo} />
         </div>
     );
 };
