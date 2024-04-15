@@ -1,0 +1,16 @@
+/* AboutSection.css */
+.about-section {
+    padding: 50px;
+    background-color: #e60000; /* Red background */
+    color: #ffffff; /* White text */
+}
+
+.about-section h2 {
+    font-family: 'Bebas Neue', sans-serif; /* Bold font */
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 20px;
+}

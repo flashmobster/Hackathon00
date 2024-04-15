@@ -1,0 +1,15 @@
+.proof-of-concept {
+    padding: 50px;
+    background-color: #0057e7; 
+    color: #ffffff; 
+}
+
+.proof-of-concept h2 {
+    font-family: 'Bebas Neue', sans-serif; 
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.proof-of-concept p {
+    font-size: 20px;
+}
