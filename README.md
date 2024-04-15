@@ -8,15 +8,23 @@ Build an app that solves a problem or improves your life or the lives of those a
 
 ### App Ideas
 
-An app for the top restaurants in a certain category
+* An app for the top businesses/individuals in a certain category
 
-A resource for community resources
+* A directory for community resources
+
+* A game
+
+* Social Media
+
+* Store
+
+* Something Completely New
 
 ## Minimum Viable Product (MVP) Requirements: 
 
 ### Frontend
 
-- Create a React App for the frontend of your app. It should have the following:
+Create a React App for the frontend of your app. It should have the following:
 
 1. Well Designed Splash Section
 
@@ -41,13 +49,15 @@ Express library
 Cors library
 dotenv library
 
-Create at least 4 routes with at least 1 route for each HTTP Method (GET, POST, PUT, DELETE)
+- Create at least 4 routes with at least 1 route for each HTTP Method (GET, POST, PUT, DELETE)
 
-Responds to request from the frontend with data based on the endpoint they are calling.
+- Responds to request from the frontend with data based on the endpoint they are calling.
 
 ## BONUS: 
 
 - Use [Real Data]https://data.memphistn.gov/ in your app
+- If a data source from the Memphis Data Hub give you .json, use that file in your server. 
+- If a data source is already hosted on an API, make an API call from your server and return results to your frontend app.
 
 # Now Fork this Repo, update this README below and happy coding!
 
