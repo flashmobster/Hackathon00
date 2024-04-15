@@ -1,34 +1,38 @@
-// import React from 'react';
-// import './ProofOfConcept.css'; 
-
-// const ProofOfConcept = () => {
-//     return (
-//         <div className="proof-of-concept">
-//             <h2>Explore NBA Stats</h2>
-//             <p>Discover player profiles, team statistics, and game highlights. Dive deep into the world of NBA basketball!</p>
-//         </div>
-//     );
-// };
-
-// export default ProofOfConcept;
-
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProofOfConcept.css';
 
-const ProofOfConcept = ({ fetchPlayerInfo, playerInfo }) => {
+const ProofOfConcept = () => {
+    const [players, setPlayers] = useState([]);
+
+    useEffect(() => {
+        fetchPlayers();
+    }, []);
+
+    const fetchPlayers = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/players');
+            if (!response.ok) {
+                throw new Error('Failed to fetch player info');
+            }
+            const data = await response.json();
+            setPlayers(data);
+        } catch (error) {
+            console.error('Error fetching player info:', error.message);
+        }
+    };
+
     return (
         <div className="proof-of-concept">
             <h2>Explore Memphis Grizzlies Legends</h2>
             <p>Discover career statistics, highlights, and achievements of legendary Memphis Grizzlies players.</p>
-            <button onClick={fetchPlayerInfo}>Get Player Info</button>
-            {playerInfo && (
-                <div>
-                    <h3>{playerInfo.name}</h3>
-                    <p>Position: {playerInfo.position}</p>
-                    <p>Years with Grizzlies: {playerInfo.yearsWithGrizzlies}</p>
+            <button onClick={fetchPlayers}>Get Player Info</button>
+            {players.map(player => (
+                <div className="player-info-box" key={player.id}>
+                    <h3>{player.name}</h3>
+                    <p>Position: {player.position}</p>
+                    <p>Years with Grizzlies: {player.yearsWithGrizzlies}</p>
                 </div>
-            )}
+            ))}
         </div>
     );
 };

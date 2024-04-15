@@ -13,3 +13,11 @@
 .proof-of-concept p {
     font-size: 20px;
 }
+
+.player-info-box {
+    color:black;
+    background-color: #f4f4f4; 
+    border: 1px solid #ccc; 
+    padding: 20px;
+    margin-top: 20px;
+}
