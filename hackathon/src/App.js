@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import SplashSection from './SplashSection';
 import AboutSection from './AboutSection';
