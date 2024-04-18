@@ -3,11 +3,15 @@ import './ProofOfConcept.css';
 
 const ProofOfConcept = () => {
     const [players, setPlayers] = useState([]);
-    const [showPlayerInfo, setShowPlayerInfo] = useState(false);
 
     useEffect(() => {
         fetchPlayers();
     }, []);
+
+    useEffect(() => {
+        console.log('Players:', players);
+    }, [players]);
+
 
     const fetchPlayers = async () => {
         try {
@@ -16,32 +20,46 @@ const ProofOfConcept = () => {
                 throw new Error('Failed to fetch player info');
             }
             const data = await response.json();
-            setPlayers(data);
+            console.log('Player Data:', data);
+            setPlayers(data.data); // Assuming 'data' is an object with a 'data' property containing the player array
         } catch (error) {
             console.error('Error fetching player info:', error.message);
         }
     };
 
-    const togglePlayerInfo = () => {
-        setShowPlayerInfo(!showPlayerInfo);
+    const getDraftInfo = (player) => {
+        if (player.draft_year === null || player.draft_round === null || player.draft_number === null) {
+            return 'Undrafted';
+        } else {
+            return `${player.draft_year} (Round ${player.draft_round}, Pick ${player.draft_number})`;
+        }
     };
 
     return (
         <div className="proof-of-concept">
             <h2>Explore Former & Current Memphis Grizzlies</h2>
             <p>Find Out About Every Grizzly.</p>
-            <button onClick={togglePlayerInfo}>
-                {showPlayerInfo ? "Hide Player Info" : "Show Player Info"}
-            </button>
-            {showPlayerInfo && players.length > 0 && (
-                players.map(player => (
-                    <div className="player-info-box" key={player.id}>
-                        <h3>{player.first_name} {player.last_name}</h3>
-                        <p>Position: {player.position}</p>
-                        <p>Draft Year: {player.draft_year}</p>
-                    </div>
-                ))
-            )}
+            <div className="row">
+                {players.length > 0 ? (
+                    players.map(player => (
+                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={player.id}>
+                            <div className="card">
+                                <div className="card-body" style={{ backgroundColor: 'lightblue', color: 'gold', border: '1px solid white' }}>
+                                    <h5 className="card-title">{player.first_name} {player.last_name}</h5>
+                                    <p className="card-text">Height: {player.height}</p>
+                                    <p className="card-text">Jersey Number: {player.jersey_number}</p>
+                                    <p className="card-text">Weight: {player.weight}</p>
+                                    <p className="card-text">Country: {player.country}</p>
+                                    <p className="card-text">College: {player.college}</p>
+                                    <p className="card-text">Draft Info: {getDraftInfo(player)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No player information available</p>
+                )}
+            </div>
         </div>
     );
 };
