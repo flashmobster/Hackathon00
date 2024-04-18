@@ -33,7 +33,7 @@ const ProofOfConcept = () => {
             <button onClick={togglePlayerInfo}>
                 {showPlayerInfo ? "Hide Player Info" : "Show Player Info"}
             </button>
-            {showPlayerInfo && (
+            {showPlayerInfo && players.length > 0 && (
                 players.map(player => (
                     <div className="player-info-box" key={player.id}>
                         <h3>{player.first_name} {player.last_name}</h3>
