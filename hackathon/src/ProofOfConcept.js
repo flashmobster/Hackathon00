@@ -3,6 +3,32 @@ import './ProofOfConcept.css';
 
 const ProofOfConcept = ({ fetchPlayerInfo }) => {
     const [players, setPlayers] = useState([]);
+    const [newPlayerData, setNewPlayerData] = useState({
+        first_name: '',
+        last_name: '',
+        position: '',
+        height: '',
+        weight: '',
+        jersey_number: '',
+        college: '',
+        country: '',
+        draft_year: '',
+        draft_round: '',
+        draft_number: ''
+    });
+    const [updatedPlayerData, setUpdatedPlayerData] = useState({
+        id: '',
+        first_name: '',
+        last_name: '',
+        height: '',
+        weight: '',
+        jersey_number: '',
+        college: '',
+        country: '',
+        draft_year: '',
+        draft_round: '',
+        draft_number: ''
+    });
 
     useEffect(() => {
         fetchPlayers();
@@ -34,10 +60,90 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
         }
     };
 
+    const handleCreatePlayer = async () => {
+        try {
+            const response = await fetch('/players', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newPlayerData)
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Error creating player:', error);
+        }
+    };
+
+    const handleUpdatePlayer = async () => {
+        try {
+            const response = await fetch(`/players/${updatedPlayerData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedPlayerData)
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Error updating player:', error);
+        }
+    };
+
+    const handleDeletePlayer = async () => {
+        try {
+            const response = await fetch(`/players/${updatedPlayerData.id}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Error deleting player:', error);
+        }
+    };
+
     return (
         <div className="proof-of-concept">
             <h2>Explore Former & Current Memphis Grizzlies</h2>
             <p>Find Out About Every Grizzly.</p>
+            <div className="row">
+                <div>
+                    <h3>Create Player</h3>
+                    <input type="text" placeholder="First Name" value={newPlayerData.first_name} onChange={(e) => setNewPlayerData({ ...newPlayerData, first_name: e.target.value })} />
+                    <input type="text" placeholder="Last Name" value={newPlayerData.last_name} onChange={(e) => setNewPlayerData({ ...newPlayerData, last_name: e.target.value })} />
+                    <input type="text" placeholder="Jersey Number" value={newPlayerData.jersey_number} onChange={(e) => setNewPlayerData({ ...newPlayerData, jersey_number: e.target.value })} />
+                    <input type="text" placeholder="Height" value={newPlayerData.height} onChange={(e) => setNewPlayerData({ ...newPlayerData, height: e.target.value })} />
+                    <input type="text" placeholder="Weight" value={newPlayerData.weight} onChange={(e) => setNewPlayerData({ ...newPlayerData, weight: e.target.value })} />
+                    <input type="text" placeholder="Country" value={newPlayerData.country} onChange={(e) => setNewPlayerData({ ...newPlayerData, country: e.target.value })} />
+                    <input type="text" placeholder="College" value={newPlayerData.college} onChange={(e) => setNewPlayerData({ ...newPlayerData, college: e.target.value })} />
+                    <input type="text" placeholder="Draft Year" value={newPlayerData.draft_year} onChange={(e) => setNewPlayerData({ ...newPlayerData, draft_year: e.target.value })} />
+                    <input type="text" placeholder="Draft Round" value={newPlayerData.draft_round} onChange={(e) => setNewPlayerData({ ...newPlayerData, draft_round: e.target.value })} />
+                    <input type="text" placeholder="Draft Number" value={newPlayerData.draft_number} onChange={(e) => setNewPlayerData({ ...newPlayerData, draft_number: e.target.value })} />
+                    <button onClick={handleCreatePlayer}>Create Player</button>
+                </div>
+                <div>
+                    <h3>Update Player</h3>
+                    <input type="text" placeholder="Player ID" value={updatedPlayerData.id} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, id: e.target.value })} />
+                    <input type="text" placeholder="First Name" value={updatedPlayerData.first_name} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, first_name: e.target.value })} />
+                    <input type="text" placeholder="Last Name" value={updatedPlayerData.last_name} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, last_name: e.target.value })} />
+                    <input type="text" placeholder="Jersey Number" value={updatedPlayerData.jersey_number} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, jersey_number: e.target.value })} />
+                    <input type="text" placeholder="Height" value={updatedPlayerData.height} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, height: e.target.value })} />
+                    <input type="text" placeholder="Weight" value={updatedPlayerData.weight} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, weight: e.target.value })} />
+                    <input type="text" placeholder="Country" value={updatedPlayerData.country} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, country: e.target.value })} />
+                    <input type="text" placeholder="College" value={updatedPlayerData.college} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, college: e.target.value })} />
+                    <input type="text" placeholder="Draft Year" value={updatedPlayerData.draft_year} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, draft_year: e.target.value })} />
+                    <input type="text" placeholder="Draft Round" value={updatedPlayerData.draft_round} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, draft_round: e.target.value })} />
+                    <input type="text" placeholder="Draft Number" value={updatedPlayerData.draft_number} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, draft_number: e.target.value })} />
+                    <button onClick={handleUpdatePlayer}>Update Player</button>
+                </div>
+                <div>
+                    <h3>Delete Player</h3>
+                    <input type="text" placeholder="Player ID" value={updatedPlayerData.id} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, id: e.target.value })} />
+                    <button onClick={handleDeletePlayer}>Delete Player</button>
+                </div>
+            </div>
             <div className="row">
                 {players.length > 0 ? (
                     players.map(player => (
