@@ -12,3 +12,9 @@
 .card-body {
     padding: 20px;
 }
+.player-card {
+    display: inline-block;
+    margin: 10px;
+    width: calc(25% - 20px); /* Width adjustment for cards to appear in rows */
+}
+

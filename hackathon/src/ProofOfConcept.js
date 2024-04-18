@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ProofOfConcept.css';
 
-const ProofOfConcept = () => {
+const ProofOfConcept = ({ fetchPlayerInfo }) => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
@@ -12,7 +12,6 @@ const ProofOfConcept = () => {
         console.log('Players:', players);
     }, [players]);
 
-
     const fetchPlayers = async () => {
         try {
             const response = await fetch('https://hackathon00api.onrender.com/');
@@ -21,7 +20,7 @@ const ProofOfConcept = () => {
             }
             const data = await response.json();
             console.log('Player Data:', data);
-            setPlayers(data.data); // Assuming 'data' is an object with a 'data' property containing the player array
+            setPlayers(data.data);
         } catch (error) {
             console.error('Error fetching player info:', error.message);
         }
@@ -42,9 +41,9 @@ const ProofOfConcept = () => {
             <div className="row">
                 {players.length > 0 ? (
                     players.map(player => (
-                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={player.id}>
+                        <div key={player.id} className="player-card">
                             <div className="card">
-                                <div className="card-body" style={{ backgroundColor: 'lightblue', color: 'gold', border: '1px solid white' }}>
+                                <div className="card-body" style={{ backgroundColor: 'skyblue', color: 'gold', border: '3px solid white', fontWeight: "bold", display: 'inline-block', margin: '10px' }}>
                                     <h5 className="card-title">{player.first_name} {player.last_name}</h5>
                                     <p className="card-text">Height: {player.height}</p>
                                     <p className="card-text">Jersey Number: {player.jersey_number}</p>
