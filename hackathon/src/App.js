@@ -8,7 +8,7 @@ const App = () => {
 
     const fetchPlayerInfo = async () => {
         try {
-            const response = await fetch('/api/players/1'); // Fetch player info for player with ID 1 (can be dynamic)
+            const response = await fetch('/'); 
             const data = await response.json();
             setPlayerInfo(data);
         } catch (error) {
