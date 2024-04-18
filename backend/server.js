@@ -1,38 +1,29 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
-
-
-const players = [
-    { id: 1, name: 'Marc Gasol', position: 'Center', yearsWithGrizzlies: 11 },
-    { id: 2, name: 'Mike Conley', position: 'Point Guard', yearsWithGrizzlies: 12 },
-    { id: 3, name: 'Zach Randolph', position: 'Power Forward', yearsWithGrizzlies: 8 },
-    { id: 4, name: 'Shareef Abdur-Rahim', position: 'Point Guard', yearsWithGrizzlies: 5 },
-    { id: 5, name: 'Pau Gasol', position: 'Power Forward', yearsWithGrizzlies: 7 },
-    { id: 6, name: 'Mike Miller', position: 'Small Forward', yearsWithGrizzlies: 6 },
-];
+const port = 5001;
 
 app.use(cors());
 app.use(express.json());
 
-// Route to get all players
-app.get('/api/players', (req, res) => {
-    res.json(players);
-});
+const API_KEY = process.env.BDL_API_KEY;
 
-// Route to get a specific player by ID
-app.get('/api/players/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const player = players.find(player => player.id === id);
-    if (player) {
-        res.json(player);
-    } else {
-        res.status(404).json({ message: 'Player not found' });
+// Route to get players from the BallDontLie API
+app.get('/', async (req, res) => {
+    try {
+        const { data } = await axios.get("https://api.balldontlie.io/v1/players?per_page=100&team_ids[]=15", {
+            headers: {
+                Authorization: `${API_KEY}`
+            }
+        });
+        res.json(data);
+    } catch (error) {
+        console.error('Error fetching players:', error);
+        res.status(500).json({ message: 'Failed to fetch players' });
     }
 });
 

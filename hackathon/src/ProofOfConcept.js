@@ -11,7 +11,7 @@ const ProofOfConcept = () => {
 
     const fetchPlayers = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/players');
+            const response = await fetch('http://localhost:5001/');
             if (!response.ok) {
                 throw new Error('Failed to fetch player info');
             }
@@ -28,17 +28,17 @@ const ProofOfConcept = () => {
 
     return (
         <div className="proof-of-concept">
-            <h2>Explore Memphis Grizzlies Legends</h2>
-            <p>Discover career statistics, highlights, and achievements of legendary Memphis Grizzlies players.</p>
+            <h2>Explore Former & Current Memphis Grizzlies</h2>
+            <p>Find Out About Every Grizzly.</p>
             <button onClick={togglePlayerInfo}>
                 {showPlayerInfo ? "Hide Player Info" : "Show Player Info"}
             </button>
             {showPlayerInfo && (
                 players.map(player => (
                     <div className="player-info-box" key={player.id}>
-                        <h3>{player.name}</h3>
+                        <h3>{player.first_name} {player.last_name}</h3>
                         <p>Position: {player.position}</p>
-                        <p>Years with Grizzlies: {player.yearsWithGrizzlies}</p>
+                        <p>Draft Year: {player.draft_year}</p>
                     </div>
                 ))
             )}
