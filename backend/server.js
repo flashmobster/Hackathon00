@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
     try {
         let allPlayers = [];
         let page = 1;
-        let totalPages = 1; // Start with one page
+        let totalPages = 1; // page one to begin
 
         // Fetch all pages of players
         while (page <= totalPages) {
