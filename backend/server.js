@@ -26,7 +26,7 @@ app.get('/', async (req, res) => {
                 Authorization: `${API_KEY}`
             }
         });
-        const combinedData = [...data, ...data2];
+        const combinedData = [...data.data, ...data2.data];
         res.json(combinedData);
     } catch (error) {
         console.error('Error fetching players:', error);
