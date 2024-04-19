@@ -1,0 +1,10 @@
+.header{
+    padding: 10px;
+    background-color: navy;
+    color: white;
+    border: 3px white solid;
+}
+.logo{
+    width:200px;
+    height: auto;
+}

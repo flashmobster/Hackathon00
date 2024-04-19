@@ -21,12 +21,12 @@ app.get('/', async (req, res) => {
             }
         });
 
-        const { data: externalData } = await axios.get("https://api.balldontlie.io/v1/players?per_page=100&team_ids[]=15&cursor=17895899", {
+        const { data: data2 } = await axios.get("https://api.balldontlie.io/v1/players?per_page=100&team_ids[]=15&cursor=17895899", {
             headers: {
                 Authorization: `${API_KEY}`
             }
         });
-        const combinedData = [...serverData, ...externalData.data];
+        const combinedData = [...data, ...data2];
         res.json(combinedData);
     } catch (error) {
         console.error('Error fetching players:', error);

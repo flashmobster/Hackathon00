@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SplashSection from './SplashSection';
 import AboutSection from './AboutSection';
 import ProofOfConcept from './ProofOfConcept';
+import Header from './Header';
 
 const App = () => {
     const [playerInfo, setPlayerInfo] = useState(null);
@@ -18,6 +19,7 @@ const App = () => {
 
     return (
         <div>
+            <Header />
             <SplashSection />
             <AboutSection />
             <ProofOfConcept fetchPlayerInfo={fetchPlayerInfo} playerInfo={playerInfo} />
