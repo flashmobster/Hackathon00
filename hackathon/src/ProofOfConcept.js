@@ -6,6 +6,7 @@ import PlayerSearch from './PlayerSearch';
 const ProofOfConcept = ({ fetchPlayerInfo }) => {
     const [players, setPlayers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
         fetchPlayers();
@@ -13,6 +14,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
 
     useEffect(() => {
         console.log('Players:', players);
+        setLoading(false);
     }, [players]);
 
     const fetchPlayers = async () => {
@@ -47,15 +49,19 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
             <h2>Explore Former & Current Memphis Grizzlies</h2>
             <p>Find Out About Grizzlies.</p>
             <PlayerSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <div className="row" >
-                {filteredPlayers.length > 0 ? (
-                    filteredPlayers.map(player => (
-                        <PlayerCard key={player.id} player={player} getDraftInfo={getDraftInfo} />
-                    ))
-                ) : (
-                    <p>No matching players found</p>
-                )}
-            </div>
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
+                <div className="row">
+                    {filteredPlayers.length > 0 ? (
+                        filteredPlayers.map(player => (
+                            <PlayerCard key={player.id} player={player} getDraftInfo={getDraftInfo} />
+                        ))
+                    ) : (
+                        <p>No matching players found</p>
+                    )}
+                </div>
+            )}
         </div>
     );
 };
