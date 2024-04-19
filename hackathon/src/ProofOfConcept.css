@@ -12,7 +12,7 @@
 
 .card-body {
     padding: 20px;
-    width: 201.5in;
+    width: 200px;
     height: fit-content;
     margin: 5%;
 }
@@ -22,4 +22,5 @@
     margin: 10px;
     width: calc(25% - 20px); /* Width adjustment for cards to appear in rows */
     border-radius: 10px; /* Rounded corners */
+    height: 400px;
 }
