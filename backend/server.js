@@ -20,7 +20,14 @@ app.get('/', async (req, res) => {
                 Authorization: `${API_KEY}`
             }
         });
-        res.json(data);
+
+        const { data: externalData } = await axios.get("https://api.balldontlie.io/v1/players?per_page=100&team_ids[]=15&cursor=17895899", {
+            headers: {
+                Authorization: `${API_KEY}`
+            }
+        });
+        const combinedData = [...serverData, ...externalData.data];
+        res.json(combinedData);
     } catch (error) {
         console.error('Error fetching players:', error);
         res.status(500).json({ message: 'Failed to fetch players' });

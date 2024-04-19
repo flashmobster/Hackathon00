@@ -20,6 +20,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
         id: '',
         first_name: '',
         last_name: '',
+        position: '',
         height: '',
         weight: '',
         jersey_number: '',
@@ -62,7 +63,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
 
     const handleCreatePlayer = async () => {
         try {
-            const response = await fetch('/players', {
+            const response = await fetch('https://hackathon00api.onrender.com/players', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -71,6 +72,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
             });
             const data = await response.json();
             console.log(data);
+            setPlayers([...players, data]); // Add new player to the players array
         } catch (error) {
             console.error('Error creating player:', error);
         }
@@ -78,7 +80,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
 
     const handleUpdatePlayer = async () => {
         try {
-            const response = await fetch(`/players/${updatedPlayerData.id}`, {
+            const response = await fetch(`https://hackathon00api.onrender.com/players/${updatedPlayerData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -87,6 +89,8 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
             });
             const data = await response.json();
             console.log(data);
+            const updatedPlayers = players.map(player => player.id === updatedPlayerData.id ? data : player); // Update player in players array
+            setPlayers(updatedPlayers);
         } catch (error) {
             console.error('Error updating player:', error);
         }
@@ -94,11 +98,13 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
 
     const handleDeletePlayer = async () => {
         try {
-            const response = await fetch(`/players/${updatedPlayerData.id}`, {
+            const response = await fetch(`https://hackathon00api.onrender.com/players/${updatedPlayerData.id}`, {
                 method: 'DELETE'
             });
             const data = await response.json();
             console.log(data);
+            const updatedPlayers = players.filter(player => player.id !== updatedPlayerData.id); // Remove deleted player from players array
+            setPlayers(updatedPlayers);
         } catch (error) {
             console.error('Error deleting player:', error);
         }
@@ -113,6 +119,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
                     <h3>Create Player</h3>
                     <input type="text" placeholder="First Name" value={newPlayerData.first_name} onChange={(e) => setNewPlayerData({ ...newPlayerData, first_name: e.target.value })} />
                     <input type="text" placeholder="Last Name" value={newPlayerData.last_name} onChange={(e) => setNewPlayerData({ ...newPlayerData, last_name: e.target.value })} />
+                    <input type="text" placeholder="Position" value={newPlayerData.position} onChange={(e) => setNewPlayerData({ ...newPlayerData, position: e.target.value })} />
                     <input type="text" placeholder="Jersey Number" value={newPlayerData.jersey_number} onChange={(e) => setNewPlayerData({ ...newPlayerData, jersey_number: e.target.value })} />
                     <input type="text" placeholder="Height" value={newPlayerData.height} onChange={(e) => setNewPlayerData({ ...newPlayerData, height: e.target.value })} />
                     <input type="text" placeholder="Weight" value={newPlayerData.weight} onChange={(e) => setNewPlayerData({ ...newPlayerData, weight: e.target.value })} />
@@ -128,6 +135,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
                     <input type="text" placeholder="Player ID" value={updatedPlayerData.id} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, id: e.target.value })} />
                     <input type="text" placeholder="First Name" value={updatedPlayerData.first_name} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, first_name: e.target.value })} />
                     <input type="text" placeholder="Last Name" value={updatedPlayerData.last_name} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, last_name: e.target.value })} />
+                    <input type="text" placeholder="Position" value={updatedPlayerData.position} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, position: e.target.value })} />
                     <input type="text" placeholder="Jersey Number" value={updatedPlayerData.jersey_number} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, jersey_number: e.target.value })} />
                     <input type="text" placeholder="Height" value={updatedPlayerData.height} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, height: e.target.value })} />
                     <input type="text" placeholder="Weight" value={updatedPlayerData.weight} onChange={(e) => setUpdatedPlayerData({ ...updatedPlayerData, weight: e.target.value })} />
@@ -150,6 +158,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
                         <div key={player.id} className="player-card">
                             <div className="card">
                                 <div className="card-body" style={{ backgroundColor: 'skyblue', color: 'gold', border: '3px solid white', fontWeight: "bold", display: 'inline-block', margin: '10px' }}>
+                                    <h6>ID# <strong>{player.id}</strong></h6>
                                     <h5 className="card-title">{player.first_name} {player.last_name}</h5>
                                     <p className="card-text">Height: {player.height}</p>
                                     <p className="card-text">Jersey Number: {player.jersey_number}</p>
