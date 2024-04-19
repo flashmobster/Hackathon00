@@ -27,7 +27,7 @@ app.get('/', async (req, res) => {
             }
         });
         
-        const combinedData = [...data, ...data2];
+        const combinedData = [...data.data, ...data2.data];
         
         res.json(combinedData);
     } catch (error) {
