@@ -153,7 +153,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
                 </div>
             </div>
             <div className="row">
-                {players.length > 0 ? (
+                {players.length >= 1 ? (
                     players.map(player => (
                         <div key={player.id} className="player-card">
                             <div className="card">
