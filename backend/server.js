@@ -26,13 +26,16 @@ app.get('/', async (req, res) => {
                 Authorization: `${API_KEY}`
             }
         });
-        const combinedData = [...data.data, ...data2.data];
+        
+        const combinedData = [...data, ...data2];
+        
         res.json(combinedData);
     } catch (error) {
-        console.error('Error fetching players:', error);
-        res.status(500).json({ message: 'Failed to fetch players' });
+        console.error('Error fetching player info:', error.message);
+        res.status(500).json({ error: 'Failed to fetch player info' });
     }
 });
+
 
 // POST route for creating a new player
 app.post('/players', async (req, res) => {
