@@ -5,16 +5,21 @@
 }
 
 .card {
-    width: 100%;
+    width: fit-content;
     height: 100%;
+    border-radius: 10px; /* Rounded corners */
 }
 
 .card-body {
     padding: 20px;
+    width: 201.5in;
+    height: fit-content;
+    margin: 5%;
 }
+
 .player-card {
     display: inline-block;
     margin: 10px;
     width: calc(25% - 20px); /* Width adjustment for cards to appear in rows */
+    border-radius: 10px; /* Rounded corners */
 }
-
