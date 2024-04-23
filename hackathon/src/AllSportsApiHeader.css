@@ -1,0 +1,10 @@
+.background{
+    padding: 10px;
+    background-color: rgba(128, 128, 128, 0.534);
+    color: white;
+    border: 3px white solid;
+}
+.apiLogo{
+    width:200px;
+    height: auto;
+}

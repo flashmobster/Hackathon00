@@ -13,7 +13,7 @@ app.use(express.json());
 const API_KEY = process.env.BDL_API_KEY;
 
 // Route to get players from the BallDontLie API
-app.get('/', async (req, res) => {
+app.get('/players', async (req, res) => {
     try {
         const { data } = await axios.get("https://api.balldontlie.io/v1/players?per_page=100&team_ids[]=15", {
             headers: {
@@ -35,6 +35,24 @@ app.get('/', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch player info' });
     }
 });
+const options = {
+    method: 'GET',
+    url: 'https://allsportsapi2.p.rapidapi.com/api/basketball/team/3415/media',
+    headers: {
+      'X-RapidAPI-Key': '940b645e1cmsha9da1e791868fddp11e0bejsn0d94bbd9fa24',
+      'X-RapidAPI-Host': 'allsportsapi2.p.rapidapi.com'
+    }
+  };
+  
+  app.get('/highlights', async (req, res) => {
+    try {
+      const response = await axios.request(options);
+      res.json(response.data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 
 // POST route for creating a new player

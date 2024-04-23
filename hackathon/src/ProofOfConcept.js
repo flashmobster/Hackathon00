@@ -19,7 +19,7 @@ const ProofOfConcept = ({ fetchPlayerInfo }) => {
 
     const fetchPlayers = async () => {
         try {
-            const response = await fetch('https://hackathon00api.onrender.com/');
+            const response = await fetch('https://hackathon00api.onrender.com/players');
             if (!response.ok) {
                 throw new Error('Failed to fetch player info');
             }
