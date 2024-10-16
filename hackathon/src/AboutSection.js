@@ -1,6 +1,6 @@
 import React from 'react';
 import './AboutSection.css'; 
-import poole from './src/Screenshot_20241016_144806_Chrome.jpg'
+import poole from './Screenshot_20241016_144806_Chrome.jpg'
 
 const AboutSection = () => {
     return (
