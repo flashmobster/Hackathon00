@@ -26,6 +26,7 @@ const App = () => {
         <div>
             <Header />
             <SplashSection />
+            <h1>Recent Grizzlies Highlights</h1>
             <HighlightCarousel />
             <AboutSection />
             <ProofOfConcept fetchPlayerInfo={fetchPlayerInfo} playerInfo={playerInfo} />
