@@ -29,11 +29,11 @@ const HighlightCarousel = () => {
       <button onClick={prevSlide} className="carousel-button left">&#10094;</button>
 
       <div className="carousel-slide">
-        <img
+        {/* <img
           src={currentHighlight.thumbnailUrl}
           alt={currentHighlight.title}
           className="carousel-image"
-        />
+        /> */}
         <h2>{currentHighlight.title}</h2>
         <p>{currentHighlight.subtitle}</p>
         <a href={currentHighlight.url} target="_blank" rel="noopener noreferrer" className="view-button">View on YouTube</a>
