@@ -3,6 +3,7 @@ import SplashSection from './SplashSection';
 import AboutSection from './AboutSection';
 import ProofOfConcept from './ProofOfConcept';
 import Header from './Header';
+import HighlightCarousel from './HighlightCarousel';
 
 const App = () => {
     const [playerInfo, setPlayerInfo] = useState(null);
@@ -21,6 +22,7 @@ const App = () => {
         <div>
             <Header />
             <SplashSection />
+            <HighlightCarousel />
             <AboutSection />
             <ProofOfConcept fetchPlayerInfo={fetchPlayerInfo} playerInfo={playerInfo} />
         </div>
