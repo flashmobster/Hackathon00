@@ -4,7 +4,6 @@ import './HighlightCarousel.css';
 const HighlightCarousel = () => {
   const [highlights, setHighlights] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetch('https://hackathon00api.onrender.com/highlights')
@@ -17,22 +16,12 @@ const HighlightCarousel = () => {
 
   const currentHighlight = highlights[currentIndex];
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % highlights.length);
-    closeModal(); // Close the modal when changing slides
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? highlights.length - 1 : prevIndex - 1));
-    closeModal(); // Close the modal when changing slides
   };
 
   return (
@@ -47,28 +36,20 @@ const HighlightCarousel = () => {
         />
         <h2>{currentHighlight.title}</h2>
         <p>{currentHighlight.subtitle}</p>
-        <button onClick={openModal} className="play-button">Play Video</button>
+        <a href={currentHighlight.url} target="_blank" rel="noopener noreferrer" className="view-button">View on YouTube</a>
+        <iframe
+          width="560"
+          height="315"
+          src={`https://www.youtube.com/embed/${currentHighlight.url.split('v=')[1]}`}
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title={currentHighlight.title}
+          className="youtube-iframe"
+        ></iframe>
       </div>
 
       <button onClick={nextSlide} className="carousel-button right">&#10095;</button>
-
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button onClick={closeModal} className="close-button">&times;</button>
-            <h2>{currentHighlight.title}</h2>
-            <iframe
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${currentHighlight.videoId}?autoplay=1&mute=1`}
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title="YouTube Video"
-            ></iframe>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
