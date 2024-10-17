@@ -1,7 +1,7 @@
 // HighlightCarousel.js
 import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
-import "./HighlightCarousel.css";
+import './HighlightCarousel.css';
 
 const HighlightCarousel = () => {
   const [highlights, setHighlights] = useState([]);
