@@ -36,7 +36,7 @@ const HighlightCarousel = () => {
         /> */}
         <h2>{currentHighlight.title}</h2>
         <p>{currentHighlight.subtitle}</p>
-        <a href={currentHighlight.url} target="_blank" rel="noopener noreferrer" className="view-button">View on YouTube</a>
+        {/* <a href={currentHighlight.url} target="_blank" rel="noopener noreferrer" className="view-button">View on YouTube</a> */}
         <iframe
           width="560"
           height="315"
