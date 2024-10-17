@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './HighlightCarousel.css';
 
 const HighlightCarousel = () => {
   const [highlights, setHighlights] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const playerRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetch('https://hackathon00api.onrender.com/highlights')
@@ -14,63 +13,27 @@ const HighlightCarousel = () => {
       .catch((error) => console.error('Error fetching highlights:', error));
   }, []);
 
-  // Load YouTube IFrame Player API
-  const loadYouTubeAPI = () => {
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      
-      window.onYouTubeIframeAPIReady = () => {
-        createPlayer();
-      };
-    } else {
-      createPlayer();
-    }
+  if (highlights.length === 0) return <p>Loading highlights...</p>;
+
+  const currentHighlight = highlights[currentIndex];
+
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  // Create the YouTube player instance
-  const createPlayer = () => {
-    const videoId = highlights[currentIndex]?.videoId;
-    playerRef.current = new window.YT.Player(`youtube-player-${currentIndex}`, {
-      videoId: videoId,
-      playerVars: { autoplay: 1, mute: 1, enablejsapi: 1 },
-      events: {
-        onReady: (event) => {
-          setIsVideoReady(true);
-        },
-      },
-    });
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % highlights.length);
-    setIsVideoReady(false);
-    stopVideo();
+    closeModal(); // Close the modal when changing slides
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? highlights.length - 1 : prevIndex - 1));
-    setIsVideoReady(false);
-    stopVideo();
+    closeModal(); // Close the modal when changing slides
   };
-
-  const stopVideo = () => {
-    if (playerRef.current) {
-      playerRef.current.stopVideo();
-    }
-  };
-
-  const playVideo = () => {
-    if (playerRef.current) {
-      playerRef.current.playVideo();
-    }
-  };
-
-  if (highlights.length === 0) return <p>Loading highlights...</p>;
-
-  const currentHighlight = highlights[currentIndex];
 
   return (
     <div className="carousel-container">
@@ -84,16 +47,28 @@ const HighlightCarousel = () => {
         />
         <h2>{currentHighlight.title}</h2>
         <p>{currentHighlight.subtitle}</p>
-        {isVideoReady && (
-          <div
-            id={`youtube-player-${currentIndex}`}
-            className="carousel-video"
-          ></div>
-        )}
-        <button onClick={playVideo} className="play-button">Play Video</button>
+        <button onClick={openModal} className="play-button">Play Video</button>
       </div>
 
       <button onClick={nextSlide} className="carousel-button right">&#10095;</button>
+
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button onClick={closeModal} className="close-button">&times;</button>
+            <h2>{currentHighlight.title}</h2>
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${currentHighlight.videoId}?autoplay=1&mute=1`}
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="YouTube Video"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
